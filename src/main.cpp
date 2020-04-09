@@ -17,7 +17,11 @@ BluetoothSerial btSerial;
 
 #define BUILTIN_LED 2 // LED is active high
 
-#define MAX_SPEED 100
+#define MAX_SPEED_1 100
+#define MAX_SPEED_2 200
+#define MAX_SPEED_3 300
+#define MAX_SPEED_4 400
+#define MAX_SPEED_5 500
 
 HardwareSerial MotorSerial(1);
 boolean btConnected = false;
@@ -25,6 +29,7 @@ char key, previousKey;
 int motorLeft, motorRight;
 long previousMillis = 0;
 int timeout = 2000;
+int maxSpeed = 100;
 
 
 // Arduino JoyStick App Variables
@@ -142,7 +147,12 @@ void loop(){
   Serial.println(button);
 
     
-  if(button) {
+   if(button) {
+     maxSpeed = MAX_SPEED_3;
+   } else {
+     maxSpeed = MAX_SPEED_1;
+   }
+
 
     if(down == 0) {
       sendVal1 = up;
@@ -156,14 +166,15 @@ void loop(){
       sendVal2 = -left;
     }
     
-    sendVal1 = map(sendVal1, 0, 255, 0, MAX_SPEED);
-    sendVal2 = map(sendVal2, 0, 255, 0, MAX_SPEED);
+    sendVal1 = map(sendVal1, 0, 255, 0, maxSpeed);
+    sendVal2 = map(sendVal2, 0, 255, 0, maxSpeed);
 
     hoverboard.sendPWM(sendVal1, sendVal2, PROTOCOL_SOM_NOACK); 
-  } else {
-      hoverboard.sendPWM(0, 0, PROTOCOL_SOM_NOACK);
-      delay(10);
-  }
+
+  // } else {
+  //     hoverboard.sendPWM(0, 0, PROTOCOL_SOM_NOACK);
+  //     delay(10);
+  // }
   // Serial.print(sendVal1);
   // Serial.print("   ");
   // Serial.println(sendVal2);

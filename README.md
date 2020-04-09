@@ -29,7 +29,7 @@
 
 ## Flashing
 
-For flashing the ESP32, I used Visual Studio Code with PlatformIO, maybe you need to change the board type, if its not Wemos-like ESP32, but try for yourself!
+For flashing the ESP32, I used Visual Studio Code with PlatformIO, maybe you need to change the board type, if its not a wemos-like ESP32, but try it for yourself! Write me, if you worked it out the other way.
 
 ## Using
  - Turning on the hoverboard as usual

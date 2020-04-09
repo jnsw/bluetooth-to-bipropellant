@@ -9,6 +9,8 @@
 
  - a hoverboard flashed with the firmware [bipropellant](https://github.com/bipropellant)/**[bipropellant-hoverboard-firmware](https://github.com/bipropellant/bipropellant-hoverboard-firmware)** 
  <br>(configured with **#define CONTROL_TYPE USART2_CONTROLLED**)
+ <br>(you can use parts out of [this tutorial](https://github.com/NiklasFauth/hoverboard-firmware-hack/wiki/Build-Instruction:-TranspOtter) to get to know, how to flash the board - also you need an 
+ - ST-Link V2 USB for flashing the firmware onto your board - **don't forget not to power the hoverboard mainboard with the usb stick - it will fry it** 
  - the app *Arduino Bluetooth Joystick* ([from Play Store](https://play.google.com/store/apps/details?id=com.juan.arducontrol))
  - an ESP32 (I used an Wemos styled one, but it should work with every version) 
 

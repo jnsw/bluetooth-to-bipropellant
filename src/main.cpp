@@ -22,14 +22,25 @@ BluetoothSerial btSerial;
 #define MAX_SPEED_3 300
 #define MAX_SPEED_4 400
 #define MAX_SPEED_5 500
+#define MAX_SPEED_6 600
+#define MAX_SPEED_7 700
+#define MAX_SPEED_8 800
+#define MAX_SPEED_9 900
+#define MAX_SPEED_10 1000
 
-HardwareSerial MotorSerial(1);
-boolean btConnected = false;
-char key, previousKey;
-int motorLeft, motorRight;
-long previousMillis = 0;
-int timeout = 2000;
+//set two speeds
+#define MAX_SPEED_SLOW MAX_SPEED_1
+#define MAX_SPEED_FAST MAX_SPEED_4
 int maxSpeed = 100;
+
+
+
+// boolean btConnected = false;
+// char key, previousKey;
+// int motorLeft, motorRight;
+// long previousMillis = 0;
+// int timeout = 2000;
+// 
 
 
 // Arduino JoyStick App Variables
@@ -37,22 +48,25 @@ int up = 0;
 int down = 0;
 int right = 0;
 int left = 0;
+int updown = 0;
+int leftright = 0;
 bool button;
 
 long int valX = 0;
 long int valY = 0;
-
 bool flag = true;
 
+
 // BiPropellant API 
+#define RXD2 16
+#define TXD2 17
+HardwareSerial MotorSerial(1);
+
 int serialWrapper(unsigned char *data, int len) {
  return (int) MotorSerial.write(data,len);
 }
 HoverboardAPI hoverboard = HoverboardAPI(serialWrapper);
 
-//define Serial Pins GPIO16/17
-#define RXD2 16
-#define TXD2 17
 
 //Values to send
 int sendVal1 = 0;
@@ -96,6 +110,7 @@ void Joystick() {
         }
         left = map(left, 0, 50, 0, 255);
         right = map(right, 0, 50, 0, 255);
+        leftright = map(valX, -50, 50, -255, 255);
         flag = false;
       }
       else {
@@ -115,6 +130,7 @@ void Joystick() {
         }
         up = map(up, 0, 50, 0, 255);
         down = map(down, 0, 50, 0, 255);
+        updown = map(valY, -50, 50, -255, 255);
         flag = true;
       }
     }
@@ -132,10 +148,9 @@ void Joystick() {
 }
 
 
-void loop(){
-
+void loop() {
   Joystick();
-
+  //JoyStick Values for debug
   Serial.print(up);
   Serial.print("   ");
   Serial.print(down);
@@ -144,40 +159,27 @@ void loop(){
   Serial.print("   ");
   Serial.print(right);
   Serial.print("   ");
+  Serial.print(updown);
+  Serial.print("   ");
+  Serial.print(leftright);
+  Serial.print("   ");
   Serial.println(button);
+  
+  // Press A to set more speed 
+  if(button) {
+    maxSpeed = MAX_SPEED_FAST;
+  } else {
+    maxSpeed = MAX_SPEED_SLOW;
+  }
+  
+  //Map values of controller to speed config
+  sendVal1 = map(updown, 0, 255, 0, maxSpeed);
+  sendVal2 = map(leftright, 0, 255, 0, maxSpeed);
 
-    
-   if(button) {
-     maxSpeed = MAX_SPEED_3;
-   } else {
-     maxSpeed = MAX_SPEED_1;
-   }
-
-
-    if(down == 0) {
-      sendVal1 = up;
-    } else {
-      sendVal1 = -down;
-    }
-
-    if(left == 0) {
-      sendVal2 = right;
-    } else {
-      sendVal2 = -left;
-    }
-    
-    sendVal1 = map(sendVal1, 0, 255, 0, maxSpeed);
-    sendVal2 = map(sendVal2, 0, 255, 0, maxSpeed);
-
-    hoverboard.sendPWM(sendVal1, sendVal2, PROTOCOL_SOM_NOACK); 
-
-  // } else {
-  //     hoverboard.sendPWM(0, 0, PROTOCOL_SOM_NOACK);
-  //     delay(10);
-  // }
-  // Serial.print(sendVal1);
-  // Serial.print("   ");
-  // Serial.println(sendVal2);
+  //Send Values to Hoverboard
+  hoverboard.sendPWM(sendVal1, sendVal2, PROTOCOL_SOM_NOACK); 
+  // Debug PWM Values
+  // Serial.print(sendVal1); Serial.print("   "); Serial.println(sendVal2); 
   delay(10);
 }
 

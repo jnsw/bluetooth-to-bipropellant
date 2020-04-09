@@ -1,10 +1,7 @@
-
-
 /*
-  Project: ESP32 Bluetooth Mobile Robot
-  Board:
-  - ESP32 Dev Module (Node32 Lite)
-    https://my.cytron.io/p-node32-lite-wifi-and-bluetooth-development-kit
+  Project: bt2bp
+  Board: ESP32 Wemos
+  https://github.com/jnsw/bt2bp
  */
 
 #include <Arduino.h>

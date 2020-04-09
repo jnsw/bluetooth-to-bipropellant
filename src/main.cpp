@@ -40,7 +40,7 @@ int maxSpeed = 100;
 // 
 
 
-// Arduino JoyStick App Variables
+// for "jpmonrest/ArduControl"
 int up = 0;
 int down = 0;
 int right = 0;
@@ -52,7 +52,7 @@ bool button;
 long int valX = 0;
 long int valY = 0;
 bool flag = true;
-
+//
 
 // BiPropellant API 
 #define RXD2 16
@@ -85,6 +85,7 @@ void setup()
   digitalWrite(BUILTIN_LED, LOW);
 }
 
+// "jpmonrest/ArduControl" joystick mini library 
 void Joystick() {
   if (btSerial.available())
   {

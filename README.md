@@ -1,6 +1,7 @@
 
-# Bluetooth-to-Bipropellant 
-### Connecting Smartphone to Hoverboard with ESP32 for RC purposes
+# bluetooth-to-bipropellant 
+### How to connect a Smartphone to a Hoverboard with the help of an ESP32 via bluetooth 
+<br>**or** just a quickstart for having fun - happy hacking!
 
 
 ## Prerequisites

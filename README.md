@@ -39,5 +39,5 @@ picture from
 [NiklasFauth](https://github.com/NiklasFauth)/**[hoverboard-firmware-hack](https://github.com/NiklasFauth/hoverboard-firmware-hack)**
 
 ## Libraries used
- - [jpmonrest](https://github.com/jpmonrest)/**[ArduControl](https://github.com/jpmonrest/ArduControl)**
- - [bipropellant](https://github.com/bipropellant)/**[bipropellant-hoverboard-api](https://github.com/bipropellant/bipropellant-hoverboard-api)**
+ - [jpmonrest](https://github.com/jpmonrest)/**[ArduControl](https://github.com/jpmonrest/ArduControl)** - for the steering wheel interface to the corresponding [app](https://play.google.com/store/apps/details?id=com.juan.arducontrol)
+ - [bipropellant](https://github.com/bipropellant)/**[bipropellant-hoverboard-api](https://github.com/bipropellant/bipropellant-hoverboard-api)** - to communicate to the freshly flashed hoverboard

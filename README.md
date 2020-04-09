@@ -5,7 +5,8 @@
 
 ## Prerequisites
 
- - a hoverboard flashed with the firmware [bipropellant](https://github.com/bipropellant)/**[bipropellant-hoverboard-firmware](https://github.com/bipropellant/bipropellant-hoverboard-firmware)** (configured with **#define CONTROL_TYPE USART2_CONTROLLED**)
+ - a hoverboard flashed with the firmware [bipropellant](https://github.com/bipropellant)/**[bipropellant-hoverboard-firmware](https://github.com/bipropellant/bipropellant-hoverboard-firmware)** 
+ <br>(configured with **#define CONTROL_TYPE USART2_CONTROLLED**)
  - the app *Arduino Bluetooth Joystick* ([from Play Store](https://play.google.com/store/apps/details?id=com.juan.arducontrol))
  - an ESP32 (I used an Wemos styled one, but it should work with every version) 
 

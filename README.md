@@ -32,10 +32,10 @@
 For flashing the ESP32, I used Visual Studio Code with PlatformIO, maybe you need to change the board type, if its not a wemos-like ESP32, but try it for yourself! Write me, if you worked it out the other way.
 
 ## Using
- - Turning on the hoverboard as usual
- - Connect to *Bierporter One* via Bluetooth
- - Open Controller App and connect to the device again
- - Drive around with slow speed and by holding A it will drive with faster speeds (you can change the speed in the config part of the code)
+ - Turning on the hoverboard as usual by pressing the on button once
+ - Connect to *Bierporter One* (bluetooth name of the ESP32 you can also change in the code) via Bluetooth
+ - Open the controller app and choose your device
+ - Use the D-pad to drive around and by holding the A button it will let you drive faster (you can change the both speeds in the config part of the code)
  - Have fun!
  
 ## Hardware

@@ -14,23 +14,14 @@ BluetoothSerial btSerial;
 
 #define BUILTIN_LED 2 // LED is active high
 
-#define MAX_SPEED_1 100
-#define MAX_SPEED_2 200
-#define MAX_SPEED_3 300
-#define MAX_SPEED_4 400
-#define MAX_SPEED_5 500
-#define MAX_SPEED_6 600
-#define MAX_SPEED_7 700
-#define MAX_SPEED_8 800
-#define MAX_SPEED_9 900
-#define MAX_SPEED_10 1000
 
 //set two speeds
-#define MAX_SPEED_SLOW MAX_SPEED_1
-#define MAX_SPEED_FAST MAX_SPEED_4
+#define MAX_SPEED_SLOW_PRE 15
+#define MAX_SPEED_FAST_PRE 100
 int maxSpeed = 100;
 
-
+#define MAX_SPEED_SLOW MAX_SPEED_SLOW_PRE * 10
+#define MAX_SPEED_FAST MAX_SPEED_FAST_PRE * 10
 
 // boolean btConnected = false;
 // char key, previousKey;
@@ -52,6 +43,8 @@ bool button;
 long int valX = 0;
 long int valY = 0;
 bool flag = true;
+bool reverseUpDown = true;
+bool reverseLeftRight = false;
 //
 
 // BiPropellant API 
@@ -65,9 +58,12 @@ int serialWrapper(unsigned char *data, int len) {
 HoverboardAPI hoverboard = HoverboardAPI(serialWrapper);
 
 
-//Values to send
+//Values DO NOT CHANGE
 int sendVal1 = 0;
 int sendVal2 = 0;
+int reverseUpDownVal = reverseUpDown ? -1 : 1;
+int reverseLeftRightVal = reverseLeftRight ? -1 : 1;
+
 
 void setup()
 {
@@ -175,7 +171,7 @@ void loop() {
   sendVal2 = map(leftright, 0, 255, 0, maxSpeed);
 
   //Send Values to Hoverboard
-  hoverboard.sendPWM(sendVal1, sendVal2, PROTOCOL_SOM_NOACK); 
+  hoverboard.sendPWM(sendVal1 * reverseUpDownVal, sendVal2 * reverseLeftRightVal, PROTOCOL_SOM_NOACK); 
   // Debug PWM Values
   // Serial.print(sendVal1); Serial.print("   "); Serial.println(sendVal2); 
   delay(10);

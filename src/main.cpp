@@ -8,12 +8,15 @@
 #include <BluetoothSerial.h>
 #include <HardwareSerial.h>
 #include <HoverboardAPI.h>
+#include <NintendoExtensionCtrl.h>
+
 BluetoothSerial btSerial;
 
 #define BT_NAME "Bierporter One" // Set bluetooth name
 
 #define BUILTIN_LED 2 // LED is active high
 
+Nunchuk nchuk;
 
 //set two speeds
 #define MAX_SPEED_SLOW_PRE 15
@@ -58,6 +61,9 @@ int serialWrapper(unsigned char *data, int len) {
 HoverboardAPI hoverboard = HoverboardAPI(serialWrapper);
 
 
+// Nunchuck
+bool isNun = false;
+
 //Values DO NOT CHANGE
 int sendVal1 = 0;
 int sendVal2 = 0;
@@ -79,6 +85,19 @@ void setup()
   Serial.println("Bierporter startet");
   Serial.println();
   digitalWrite(BUILTIN_LED, LOW);
+
+  Serial.println("Nunchuk Connect");
+  nchuk.begin();
+  Serial.println("begin");
+  delay(1000);
+  if (nchuk.connect()) {
+    Serial.println("Nunchuk detected!");
+    isNun = true;
+  } else {
+		Serial.println("Nunchuk not detected!");
+		delay(1000);
+	}
+
 }
 
 // "jpmonrest/ArduControl" joystick mini library 
@@ -143,37 +162,78 @@ void Joystick() {
 
 
 void loop() {
-  Joystick();
-  //JoyStick Values for debug
-  Serial.print(up);
-  Serial.print("   ");
-  Serial.print(down);
-  Serial.print("   ");
-  Serial.print(left);
-  Serial.print("   ");
-  Serial.print(right);
-  Serial.print("   ");
-  Serial.print(updown);
-  Serial.print("   ");
-  Serial.print(leftright);
-  Serial.print("   ");
-  Serial.println(button);
-  
-  // Press A to set more speed 
-  if(button) {
-    maxSpeed = MAX_SPEED_FAST;
-  } else {
-    maxSpeed = MAX_SPEED_SLOW;
-  }
-  
-  //Map values of controller to speed config
-  sendVal1 = map(updown, 0, 255, 0, maxSpeed);
-  sendVal2 = map(leftright, 0, 255, 0, maxSpeed);
 
-  //Send Values to Hoverboard
-  hoverboard.sendPWM(sendVal1 * reverseUpDownVal, sendVal2 * reverseLeftRightVal, PROTOCOL_SOM_NOACK); 
-  // Debug PWM Values
-  // Serial.print(sendVal1); Serial.print("   "); Serial.println(sendVal2); 
+  if(isNun){
+    
+    boolean success = nchuk.update();
+
+    if (!success) {  // Ruh roh
+      Serial.println("Controller disconnected!");
+      delay(1000);
+    } else {
+      // Read a button (on/off, C and Z)
+      boolean zButton = nchuk.buttonZ();
+
+      Serial.print("The Z button is ");
+      if (zButton == true) {
+        Serial.println("pressed");
+      }
+      else if (zButton == false) {
+        Serial.println("released");
+      }
+
+      // Read a joystick axis (0-255, X and Y)
+      int joyY = nchuk.joyY();
+
+      Serial.print("The joystick's Y axis is at ");
+      Serial.println(joyY);
+
+      // Read an accelerometer and print values (0-1023, X, Y, and Z)
+      int accelX = nchuk.accelX();
+
+      Serial.print("The accelerometer's X-axis is at ");
+      Serial.println(accelX);
+
+      // Print all the values!
+      nchuk.printDebug();
+    }
+	} else {
+
+
+
+    Joystick();
+    //JoyStick Values for debug
+    Serial.print(up);
+    Serial.print("   ");
+    Serial.print(down);
+    Serial.print("   ");
+    Serial.print(left);
+    Serial.print("   ");
+    Serial.print(right);
+    Serial.print("   ");
+    Serial.print(updown);
+    Serial.print("   ");
+    Serial.print(leftright);
+    Serial.print("   ");
+    Serial.println(button);
+    
+    // Press A to set more speed 
+    if(button) {
+      maxSpeed = MAX_SPEED_FAST;
+    } else {
+      maxSpeed = MAX_SPEED_SLOW;
+    }
+    
+    //Map values of controller to speed config
+    sendVal1 = map(updown, 0, 255, 0, maxSpeed);
+    sendVal2 = map(leftright, 0, 255, 0, maxSpeed);
+
+    //Send Values to Hoverboard
+    hoverboard.sendPWM(sendVal1 * reverseUpDownVal, sendVal2 * reverseLeftRightVal, PROTOCOL_SOM_NOACK); 
+    // Debug PWM Values
+    // Serial.print(sendVal1); Serial.print("   "); Serial.println(sendVal2); 
+
+  }
   delay(10);
 }
 

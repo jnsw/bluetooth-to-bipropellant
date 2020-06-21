@@ -17,7 +17,7 @@ BluetoothSerial btSerial;
 
 //set two speeds
 #define MAX_SPEED_SLOW_PRE 15
-#define MAX_SPEED_FAST_PRE 100
+#define MAX_SPEED_FAST_PRE 40
 int maxSpeed = 100;
 
 #define MAX_SPEED_SLOW MAX_SPEED_SLOW_PRE * 10

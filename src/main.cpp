@@ -41,7 +41,9 @@ int right = 0;
 int left = 0;
 int updown = 0;
 int leftright = 0;
-bool button;
+bool buttonA = false;
+bool buttonC = false;
+bool buttonZ = false;
 
 long int valX = 0;
 long int valY = 0;
@@ -149,11 +151,11 @@ void Joystick() {
     }
     else{
       if(data == 105){
-        button = 1;
+        buttonA = 1;
         digitalWrite(13,HIGH);
       }
       if(data == 106){
-        button = 0;
+        buttonA = 0;
         digitalWrite(13,LOW);
       }
     }
@@ -196,12 +198,30 @@ void loop() {
 
       // Print all the values!
       nchuk.printDebug();
+
+      valX = nchuk.joyX();
+      valY = nchuk.joyY();
+      buttonC = nchuk.buttonC();
+      buttonZ = nchuk.buttonZ();
+
+      updown = map(valY, 0, 255, -250, 250);
+      leftright = map(valX, 0, 255, -250, 250);
+      buttonA = buttonC;
+
     }
+    if(!buttonZ){
+      updown = 0;
+      leftright = 0;
+    }
+
+
+
+
+
 	} else {
-
-
-
     Joystick();
+
+  }
     //JoyStick Values for debug
     Serial.print(up);
     Serial.print("   ");
@@ -215,10 +235,10 @@ void loop() {
     Serial.print("   ");
     Serial.print(leftright);
     Serial.print("   ");
-    Serial.println(button);
+    Serial.println(buttonA);
     
     // Press A to set more speed 
-    if(button) {
+    if(buttonA) {
       maxSpeed = MAX_SPEED_FAST;
     } else {
       maxSpeed = MAX_SPEED_SLOW;
@@ -228,12 +248,16 @@ void loop() {
     sendVal1 = map(updown, 0, 255, 0, maxSpeed);
     sendVal2 = map(leftright, 0, 255, 0, maxSpeed);
 
+
+    Serial.println("Sending Values:");
+    Serial.println(sendVal1);
+    Serial.println(sendVal2);
+
     //Send Values to Hoverboard
     hoverboard.sendPWM(sendVal1 * reverseUpDownVal, sendVal2 * reverseLeftRightVal, PROTOCOL_SOM_NOACK); 
     // Debug PWM Values
     // Serial.print(sendVal1); Serial.print("   "); Serial.println(sendVal2); 
 
-  }
   delay(10);
 }
 

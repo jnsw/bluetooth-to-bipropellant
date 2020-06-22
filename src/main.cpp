@@ -176,28 +176,28 @@ void loop() {
       // Read a button (on/off, C and Z)
       boolean zButton = nchuk.buttonZ();
 
-      Serial.print("The Z button is ");
-      if (zButton == true) {
-        Serial.println("pressed");
-      }
-      else if (zButton == false) {
-        Serial.println("released");
-      }
+      // Serial.print("The Z button is ");
+      // if (zButton == true) {
+      //   Serial.println("pressed");
+      // }
+      // else if (zButton == false) {
+      //   Serial.println("released");
+      // }
 
-      // Read a joystick axis (0-255, X and Y)
-      int joyY = nchuk.joyY();
+      // // Read a joystick axis (0-255, X and Y)
+      // int joyY = nchuk.joyY();
 
-      Serial.print("The joystick's Y axis is at ");
-      Serial.println(joyY);
+      // Serial.print("The joystick's Y axis is at ");
+      // Serial.println(joyY);
 
-      // Read an accelerometer and print values (0-1023, X, Y, and Z)
-      int accelX = nchuk.accelX();
+      // // Read an accelerometer and print values (0-1023, X, Y, and Z)
+      // int accelX = nchuk.accelX();
 
-      Serial.print("The accelerometer's X-axis is at ");
-      Serial.println(accelX);
+      // Serial.print("The accelerometer's X-axis is at ");
+      // Serial.println(accelX);
 
-      // Print all the values!
-      nchuk.printDebug();
+      // // Print all the values!
+      // nchuk.printDebug();
 
       valX = nchuk.joyX();
       valY = nchuk.joyY();
@@ -223,19 +223,19 @@ void loop() {
 
   }
     //JoyStick Values for debug
-    Serial.print(up);
-    Serial.print("   ");
-    Serial.print(down);
-    Serial.print("   ");
-    Serial.print(left);
-    Serial.print("   ");
-    Serial.print(right);
-    Serial.print("   ");
-    Serial.print(updown);
-    Serial.print("   ");
-    Serial.print(leftright);
-    Serial.print("   ");
-    Serial.println(buttonA);
+    // Serial.print(up);
+    // Serial.print("   ");
+    // Serial.print(down);
+    // Serial.print("   ");
+    // Serial.print(left);
+    // Serial.print("   ");
+    // Serial.print(right);
+    // Serial.print("   ");
+    // Serial.print(updown);
+    // Serial.print("   ");
+    // Serial.print(leftright);
+    // Serial.print("   ");
+    // Serial.println(buttonA);
     
     // Press A to set more speed 
     if(buttonA) {

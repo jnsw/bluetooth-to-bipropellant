@@ -1,5 +1,5 @@
 
-# bluetooth-to-bipropellant 
+# bluetooth-to-bipropellant (currently not maintained)
 ### How to connect a Smartphone to a Hoverboard with the help of an ESP32 via bluetooth or in short *just a quickstart for having fun*
 ![](.github/example1.gif)
 ### Happy hacking!
